@@ -25,7 +25,7 @@ total_sale FLOAT
 
 --inserting data from csv to retail_sales(table)
 BULK INSERT dbo.retail_sales
-FROM 'D:\SQL\Retail-Sales-Analysis-SQL-Project--P1\RetailSalesAnalysis_utf.csv'
+FROM 'RetailSalesAnalysis.csv'
 WITH (
     FORMAT = 'CSV', 
     FIRSTROW = 2, -- skip header row
