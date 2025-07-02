@@ -117,6 +117,29 @@ GROUP BY gender, category
 order by gender;
 
 --7. Write a SQL query to calculate the average sale for each month. Find out best selling month in each year**:
+WITH MonthlySales AS (
+    SELECT 
+        YEAR(sale_date) AS sales_year,
+        MONTH(sale_date) AS sales_month,
+        SUM(total_sale) AS total_sales
+    FROM 
+        retail_sales
+    GROUP BY 
+        YEAR(sale_date), MONTH(sale_date)
+),
+RankedMonths AS (
+    SELECT *,
+           ROW_NUMBER() OVER (PARTITION BY sales_year ORDER BY total_sales DESC) AS rank_in_year
+    FROM MonthlySales
+)
+SELECT 
+    sales_year,
+    sales_month,
+    total_sales
+FROM 
+    RankedMonths
+WHERE 
+    rank_in_year = 1;
 
 --8. Write a SQL query to find the top 5 customers based on the highest total sales **:
 select top(5) customer_id,sum(total_sale) as Total
